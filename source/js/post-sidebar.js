@@ -101,29 +101,20 @@
     `;
     const discussionBody = discussion.querySelector('.widget-body');
     const comments = main.querySelector('#comments');
-    if (comments) {
-        discussionBody.appendChild(comments);
-    } else {
+    const giscus = comments?.querySelector('#giscus');
+    if (giscus) {
         const discussionActions = document.createElement('div');
         discussionActions.className = 'post-discussion-actions';
         discussionBody.appendChild(discussionActions);
 
         const title = main.querySelector('h1')?.textContent.trim() || document.title;
         const articleUrl = document.querySelector('meta[property="og:url"]')?.content || location.href;
-        const issueUrl = document.currentScript?.dataset.discussionUrl;
-        if (issueUrl) {
-            const url = new URL(issueUrl);
-            url.searchParams.set('title', `讨论：${title}`);
-            url.searchParams.set('body', `文章：${title}\n链接：${articleUrl}\n\n想法或问题：\n`);
-            const link = document.createElement('a');
-            link.className = 'post-discussion-link';
-            link.dataset.commentEntry = '';
-            link.href = url.href;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.textContent = 'GitHub 留言';
-            discussionActions.appendChild(link);
-        }
+        const link = document.createElement('a');
+        link.className = 'post-discussion-link';
+        link.dataset.commentEntry = '';
+        link.href = '#comments';
+        link.textContent = 'GitHub 留言';
+        discussionActions.appendChild(link);
 
         const email = document.querySelector('.social-wrap a[href^="mailto:"]')?.getAttribute('href');
         if (email) {
@@ -141,9 +132,8 @@
         commentWindow.className = 'post-comments-window';
         commentWindow.setAttribute('aria-labelledby', 'post-comments-heading');
         commentWindow.dataset.articleUrl = articleUrl;
-        // 评论仓库与留言入口保持一致，不需要在前端保存任何访问令牌。
-        const repo = issueUrl && new URL(issueUrl).pathname.match(/^\/([^/]+\/[^/]+)\/issues\/new\/?$/)?.[1];
-        if (repo) commentWindow.dataset.repo = repo;
+        // 从 Stellar 原生组件读取同一套配置，评论框继续保留在文章底部。
+        commentWindow.dataset.repo = giscus.dataset.repo;
         commentWindow.innerHTML = `
             <div class="post-comments-header">
                 <span id="post-comments-heading">评论</span>
@@ -156,6 +146,6 @@
         discussionBody.appendChild(commentWindow);
     }
 
-    widgets.replaceChildren(top, toc, discussion);
+    widgets.replaceChildren(...(giscus ? [top, toc, discussion] : [top, toc]));
     rightbar.classList.add('post-sidebar');
 })();

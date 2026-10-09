@@ -5,7 +5,8 @@
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
-    "deploy": "hexo deploy",
+    "deploy": "git push origin main",
+    "verify": "node tools/verify-site.mjs",
     "server": "hexo server"
   },
   "hexo": {
@@ -13,7 +14,7 @@
   },
   "dependencies": {
     "hexo": "^7.3.0",
-    "hexo-asset-image": "github:foreveryang321/hexo-asset-image",
+    "hexo-asset-image": "git+https://github.com/foreveryang321/hexo-asset-image.git#add09aa7fd231660e0b540546e3e8e531879a5d8",
     "hexo-deployer-git": "^4.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-baidu-sitemap": "^0.1.9",

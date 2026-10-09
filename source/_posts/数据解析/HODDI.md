@@ -5,7 +5,7 @@ tags:
     - HODDI
     - 药物相互作用
 toc: true
-comments: false
+comments: true
 date: 2026-10-09 18:31:25
 updated: 2026-10-09 18:31:25
 ---

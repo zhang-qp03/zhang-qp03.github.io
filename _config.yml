@@ -18,6 +18,7 @@ timezone: 'Asia/Shanghai'
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://zhang-qp03.github.io
+root: /
 permalink_defaults:
 pretty_urls:
     trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -107,11 +108,8 @@ theme: stellar
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-    type: git
-    repo: https://github.com/zhang-qp03/zhang-qp03.github.io.git
-    branch: public
-    message: 😋{{ now('YYYY-MM-DD HH:mm:ss') }}
+# GitHub Pages 由 .github/workflows/deploy.yml 发布，停用旧的分支部署。
+deploy: []
 # npm i hexo-renderer-markdown-it-plus
 markdown_it_plus:
     highlight: true
@@ -148,7 +146,7 @@ inject:
 
     script:
         - <script src="/js/contact-dialog.js" defer></script>
-        - <script src="/js/post-sidebar.js" data-discussion-url="https://github.com/zhang-qp03/zhang-qp03.github.io/issues/new" defer></script>
+        - <script src="/js/post-sidebar.js" defer></script>
         - <script src="/js/post-comments.js" defer></script>
 
 # search:

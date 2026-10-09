@@ -5,5 +5,5 @@ updated: {{ date }}
 categories: []
 tags: []
 toc: true
-comments: false
+comments: true
 ---
