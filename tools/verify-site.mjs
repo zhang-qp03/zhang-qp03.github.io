@@ -17,6 +17,14 @@ assert.equal(config.theme, 'stellar');
 assert.deepEqual(config.deploy, []);
 assert.equal(stellar.comments.service, 'giscus');
 assert.ok(existsSync(path.join(output, 'index.html')), 'Homepage was not generated');
+const commentIndex = JSON.parse(readFileSync(path.join(output, 'comments.json'), 'utf8'));
+assert.equal(commentIndex.repository, stellar.comments.giscus['data-repo']);
+assert.equal(commentIndex.category, stellar.comments.giscus['data-category']);
+for (const discussion of Object.values(commentIndex.discussions)) {
+    assert.equal(discussion.totalCommentCount, discussion.comments.length);
+    assert.equal(discussion.totalReplyCount, discussion.comments.reduce((sum, comment) => sum + comment.replies.length, 0));
+}
+if (process.env.CI) assert.equal(commentIndex.available, true, 'Comments export was not completed');
 
 const expected = {
     'data-repo': 'zhang-qp03/zhang-qp03.github.io',
@@ -104,6 +112,8 @@ assert.equal(commentPolicy({ page: { layout: 'page', comments: true, raw: '---\n
 const workflow = yaml.load(readFileSync('.github/workflows/deploy.yml', 'utf8'));
 assert.deepEqual(workflow.on.push.branches, ['main']);
 assert.ok(Object.hasOwn(workflow.on, 'workflow_dispatch'));
+assert.ok(workflow.on.discussion_comment.types.includes('created'));
+assert.equal(workflow.permissions.discussions, 'read');
 assert.equal(workflow.permissions.contents, 'read');
 assert.equal(workflow.permissions.pages, 'write');
 assert.equal(workflow.permissions['id-token'], 'write');

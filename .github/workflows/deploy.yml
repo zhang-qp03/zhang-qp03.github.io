@@ -4,9 +4,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  discussion:
+    types: [created, edited, deleted, category_changed]
+  discussion_comment:
+    types: [created, edited, deleted]
 
 permissions:
   contents: read
+  discussions: read
   pages: write
   id-token: write
 
@@ -40,6 +45,11 @@ jobs:
 
       - name: Generate website
         run: npx hexo generate
+
+      - name: Export public discussion comments
+        run: npm run comments:export
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Verify generated website
         run: |

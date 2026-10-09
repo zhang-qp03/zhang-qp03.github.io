@@ -6,7 +6,8 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "git push origin main",
-    "verify": "node tools/verify-site.mjs",
+    "verify": "node tools/verify-site.mjs && node tools/test-comments-export.mjs",
+    "comments:export": "node tools/export-comments.mjs",
     "server": "hexo server"
   },
   "hexo": {

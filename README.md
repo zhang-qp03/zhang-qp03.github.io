@@ -15,6 +15,7 @@ git submodule update --init --recursive
 npm ci
 npx hexo clean
 npx hexo generate
+npm run comments:export
 npm run verify
 npm run server
 ```
@@ -31,8 +32,11 @@ GitHub 仓库 Settings → Pages → Source 应设为 **GitHub Actions**。
 `comments: true`。Giscus GitHub App 必须安装到本仓库，Discussions 必须启用。
 首次留言或 Reaction 会创建对应的 Discussion。
 
-右侧评论摘要和数量通过 Giscus 的公开只读接口获取，不保存 Token；若接口暂时
-不可用，可直接使用文章底部的原生评论区。默认评论主题随系统明暗设置变化。
+右侧评论摘要和数量读取网站自己的 `comments.json`。Actions 使用内置的临时
+`GITHUB_TOKEN` 读取公开 Discussions，生成完整的评论及回复索引；Token 不会写入
+生成文件或发送到浏览器。Discussion 或留言创建、修改、删除时也会触发部署，
+因此侧栏数量会在该次部署完成后更新。底部 Giscus 评论区即时显示留言。
+本地导出无需个人 Token，会读取线上已发布的索引。默认评论主题随系统明暗设置变化。
 
 保留原有 Google/Baidu 验证文件、Vercel 配置及 Stellar 主题子模块来源。
 确认不再使用相应服务后，再单独清理这些配置。

@@ -46,9 +46,7 @@
         const body = document.createElement('p');
         body.className = 'post-comment-text';
         // 侧栏继续只显示纯文本；格式化正文、回复和 Reaction 由原生 Giscus 展示。
-        const template = document.createElement('template');
-        template.innerHTML = comment.bodyHTML || '';
-        body.textContent = template.content.textContent;
+        body.textContent = comment.bodyText || '';
         item.append(meta, body);
         return item;
     }
@@ -61,43 +59,26 @@
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 15000);
         try {
-            // Giscus 自己的公开读取接口，无需在浏览器中保存 GitHub Token。
-            // 保留 data-emit-metadata: 0，不另外注入 client.js 或创建评论 iframe。
-            const url = new URL('https://giscus.app/api/discussions');
-            url.searchParams.set('repo', giscus.dataset.repo);
-            url.searchParams.set('category', giscus.dataset.category);
-            url.searchParams.set('term', term);
-            url.searchParams.set('strict', String(giscus.dataset.strict === '1'));
-            url.searchParams.set('first', '100');
-            const comments = [];
-            let totalComments = 0;
-            let totalReplies = 0;
-            let hasNextPage;
-            do {
-                const response = await fetch(url, { credentials: 'omit', signal: controller.signal });
-                const data = await response.json();
-                if (response.status === 404 && data.error === 'Discussion not found') {
-                    heading.textContent = '评论（0）';
-                    showStatus('暂无评论，欢迎留下你的想法。');
-                    lastLoaded = Date.now();
-                    return;
-                }
-                if (!response.ok) throw new Error('Giscus: ' + response.status);
-                const discussion = data.discussion;
-                if (!discussion || !Array.isArray(discussion.comments)) {
-                    throw new Error('Invalid discussion response');
-                }
-                totalComments = discussion.totalCommentCount;
-                for (const comment of discussion.comments) {
-                    totalReplies += comment.replyCount || 0;
-                    comments.push(comment, ...(comment.replies || []));
-                }
-                hasNextPage = discussion.pageInfo?.hasNextPage;
-                if (hasNextPage) {
-                    if (!discussion.pageInfo.endCursor) throw new Error('Missing comment cursor');
-                    url.searchParams.set('after', discussion.pageInfo.endCursor);
-                }
-            } while (hasNextPage);
+            // 同源公开索引由 Actions 更新，保留 data-emit-metadata: 0 和原生单 iframe。
+            const response = await fetch('/comments.json', {
+                credentials: 'omit', cache: 'no-store', signal: controller.signal
+            });
+            if (!response.ok) throw new Error('Comment index: ' + response.status);
+            const data = await response.json();
+            if (!data.available || data.repository !== giscus.dataset.repo || data.category !== giscus.dataset.category) {
+                throw new Error('Comment index unavailable');
+            }
+            const discussion = data.discussions?.[term];
+            if (!discussion) {
+                heading.textContent = '评论（0）';
+                showStatus('暂无评论，欢迎留下你的想法。');
+                lastLoaded = Date.now();
+                return;
+            }
+            if (!Array.isArray(discussion.comments)) throw new Error('Invalid comment index');
+            const comments = discussion.comments.flatMap(comment => [comment, ...(comment.replies || [])]);
+            const totalComments = discussion.totalCommentCount;
+            const totalReplies = discussion.totalReplyCount;
 
             comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
             heading.textContent = '评论（' + (totalComments + totalReplies) + '）';
