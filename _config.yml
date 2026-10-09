@@ -1,0 +1,171 @@
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+title: zhangqp
+avatar: /assets/ico/小张同学.jpg
+favicon: /assets/ico/tb.png
+subtitle: 小张同学的医工学习手记 | 始于好奇，行于未知
+description: ''
+keywords:
+author: 小张同学
+language:
+    - zh-CN
+    - en
+    - zh-TW
+timezone: 'Asia/Shanghai'
+
+# URL
+## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+url: https://zhang-qp03.github.io
+permalink_defaults:
+pretty_urls:
+    trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+    trailing_html: true # Set to false to remove trailing '.html' from permalinks
+permalink: post/:title.html
+abbrlink:
+    alg: crc32 #算法： crc16(default) and crc32
+    rep: hex #进制： dec(default) and hex
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link:
+    enable: true # Open external links in new tab
+    field: site # Apply to the whole site
+    exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+    enable: true
+    line_number: true
+    auto_detect: false
+    tab_replace: ''
+    wrap: true
+    hljs: false
+prismjs:
+    enable: false
+    preprocess: true
+    line_number: true
+    tab_replace: ''
+
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+    path: ''
+    per_page: 10
+    order_by: -date
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Metadata elements
+## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+meta_generator: true
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD HH:mm
+time_format: HH:mm:ss
+## updated_option supports 'mtime', 'date', 'empty'
+updated_option: 'mtime'
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+# Include / Exclude file(s)
+## include:/exclude: options only apply to the 'source/' folder
+include:
+exclude:
+ignore:
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: stellar
+
+# Deployment
+## Docs: https://hexo.io/docs/one-command-deployment
+deploy:
+    type: git
+    repo: https://github.com/zhang-qp03/zhang-qp03.github.io.git
+    branch: public
+    message: 😋{{ now('YYYY-MM-DD HH:mm:ss') }}
+# npm i hexo-renderer-markdown-it-plus
+markdown_it_plus:
+    highlight: true
+    html: true
+    xhtmlOut: true
+    breaks: true
+    langPrefix:
+    linkify: true
+    typographer:
+    quotes: “”‘’
+    plugins:
+        - plugin:
+              name: markdown-it-mark
+              enable: false
+
+inject:
+    head:
+        - <script src="/js/random.js"></script> # 随机文章
+        - <link href="/css/appearence.css" rel="stylesheet">
+        - <link href="/css/contact-dialog.css" rel="stylesheet">
+        - <link href="/css/post-sidebar.css" rel="stylesheet">
+        - <link href="/css/tagcolor-switch.css" rel="stylesheet">
+        - <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bofeng/hyksk_webfont/dist/hyksk.css" />
+        # - <link href="/css/post_tag.css" rel="stylesheet">
+        # - <link href="/css/code_language.css" rel="stylesheet">
+        # - <link href="/css/font.css" rel="stylesheet">
+        - <link href="/css/scrollbar.css" rel="stylesheet"> # 滚动条样式优化
+        - <link rel="preconnect" href="https://s1.hdslb.com/" />
+        - <link rel="stylesheet" href="//s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" media="all" onload="this.media='all'" />
+        - <link rel="stylesheet" href="//s1.hdslb.com/bfs/static/jinkela/long/font/medium.css" media="all" onload="this.media='all'" />
+        - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+        - <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+        - <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+    script:
+        - <script src="/js/contact-dialog.js" defer></script>
+        - <script src="/js/post-sidebar.js" data-discussion-url="https://github.com/zhang-qp03/zhang-qp03.github.io/issues/new" defer></script>
+        - <script src="/js/post-comments.js" defer></script>
+
+# search:
+#   path: /search.xml
+#   field: post,wiki
+
+#RSS订阅
+plugin:
+    - hexo-generator-feed
+#Feed Atom
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
+
+lazyload:
+    enable: false
+    onlypost: true
+    isSPA: true # 针对单页面应用，当滚动条滚动到图片位置时就会向后端请求图片
+    preloadRatio: 3

@@ -1,0 +1,163 @@
+/* 统一底部四个图标的尺寸和中心点，联系图标使用同样的黑色线条。 */
+.l_left .social-wrap .social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+}
+
+.l_left .social-wrap .social > img,
+.l_left .social-wrap .social > svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.l_left .social-wrap a[href$="#contact-dialog"] {
+    color: #000;
+}
+
+html.contact-dialog-open {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
+.contact-dialog {
+    box-sizing: border-box;
+    width: min(640px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    padding: 24px;
+    border: 0;
+    border-radius: 16px;
+    background: var(--site-bg, #fff);
+    color: var(--text-p1, #222);
+    box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.contact-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.contact-dialog-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    background: var(--site-bg, #fff);
+}
+
+.contact-dialog-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.contact-dialog-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: var(--block, #f3f4f5);
+    color: inherit;
+    cursor: pointer;
+}
+
+.contact-dialog a:focus-visible,
+.contact-dialog button:focus-visible {
+    outline: 2px solid var(--theme-link, #3273dc);
+    outline-offset: 3px;
+}
+
+.contact-phone {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: var(--block, #f3f4f5);
+}
+
+.contact-phone span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-p2, #666);
+    font-size: 13px;
+}
+
+.contact-phone a {
+    color: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.contact-qr-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.contact-qr {
+    margin: 0;
+    padding: 12px;
+    border: 1px solid var(--block, #eee);
+    border-radius: 12px;
+}
+
+.contact-qr figcaption {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.contact-qr a {
+    display: block;
+    border-radius: 8px;
+}
+
+.contact-qr img {
+    display: block;
+    width: 100%;
+    height: 380px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.contact-dialog-hint {
+    margin: 16px 0 0;
+    color: var(--text-p2, #666);
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width: 540px) {
+    .contact-dialog {
+        padding: 20px;
+    }
+
+    .contact-qr-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contact-qr img {
+        height: auto;
+        max-height: 440px;
+    }
+}

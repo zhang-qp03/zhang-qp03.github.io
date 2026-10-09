@@ -1,0 +1,83 @@
+/* 文章内更新日期始终显示 */
+.bread-nav div#post-meta span.updated {
+    visibility: visible !important;
+}
+
+
+/* 文章内面包屑调整间距 */
+.banner .content .top {
+    margin: 1rem 1rem 0rem;
+}
+.banner .bottom {
+    padding: 0rem 1rem 1rem;
+}
+
+/* 文章内链接：为链接使用荧光笔下划线效果 */
+/* 文章内链接 */
+li:not([class]) a:not([class]),
+p:not([class]) a:not([class]),
+table a:not([class]) {
+  /*color: var(--theme-link);*/
+  padding-bottom: 3px; /* 增加底部padding */
+  padding-right: 1px;
+  margin-right: 2px;
+ color: var(--theme-link);
+  background: linear-gradient(0, var(--theme-link), var(--theme-link)) no-repeat center bottom / 100% 2px;
+}
+
+
+.md-text .highlight {
+    max-height: 800px;
+    overflow: auto;
+}
+
+/* 右栏：顶部随机文章按钮，下方两个索引平分窗口内的剩余空间 */
+.l_body .l_right:has(.categories-widget):has(.tagcloud),
+.l_body .l_right.post-sidebar {
+    top: 8px;
+    align-self: start;
+    box-sizing: border-box;
+    height: calc(100vh - 16px);
+    height: calc(100dvh - 16px);
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    overflow: hidden;
+}
+
+.l_body .l_right:has(.categories-widget):has(.tagcloud) > .widgets,
+.l_body .l_right.post-sidebar > .widgets {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.l_body .l_right:has(.categories-widget):has(.tagcloud) > .widgets > .widget-wrapper,
+.l_body .l_right.post-sidebar > .widgets > .widget-wrapper {
+    min-height: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+}
+
+.l_body .l_right:has(.categories-widget):has(.tagcloud) .categories-widget,
+.l_body .l_right:has(.categories-widget):has(.tagcloud) .tagcloud {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.l_body .l_right:has(.categories-widget):has(.tagcloud) .widget-header {
+    flex-shrink: 0;
+}
+
+.l_body .l_right:has(.categories-widget):has(.tagcloud) .categories-widget > .widget-body,
+.l_body .l_right:has(.categories-widget):has(.tagcloud) .tagcloud > .widget-body {
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
+}
